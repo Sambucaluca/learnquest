@@ -11,11 +11,15 @@ const commonItems: Item[] = [
   { id: 'strength_elixir', name: 'Stärke-Elixier', icon: '💪', type: 'potion', description: '+3 Stärke für 3 Runden', value: 60, rarity: 'uncommon', effects: [{ type: 'buff', stat: 'strength', amount: 3, duration: 3 }] },
 ];
 
-function createCityMap(id: string, name: string, npcPositions: Array<{x: number; y: number; npcId: string}>): GameMap {
+function createCityMap(id: string, name: string, npcPositions: Array<{x: number; y: number; npcId: string}>, exitDestination?: string): GameMap {
   const width = 15;
   const height = 12;
+  const dest = exitDestination || id.replace('_city', '_world').replace('_village', '_world');
   const tiles = Array.from({ length: height }, (_, y) =>
     Array.from({ length: width }, (_, x) => {
+      if (x === 7 && y === height - 1) {
+        return { type: 'exit' as const, walkable: true, icon: '🚪', interactable: true, description: 'Ausgang zur Welt', destination: dest };
+      }
       if (y === 0 || y === height - 1 || x === 0 || x === width - 1) {
         return { type: 'wall' as const, walkable: false, icon: '🧱', interactable: false };
       }
@@ -33,9 +37,6 @@ function createCityMap(id: string, name: string, npcPositions: Array<{x: number;
       }
       if ((x === 3 && y === 6) || (x === 11 && y === 6)) {
         return { type: 'building' as const, walkable: true, icon: '🏠', interactable: true, description: 'Ein Haus' };
-      }
-      if (x === 7 && y === height - 1) {
-        return { type: 'exit' as const, walkable: true, icon: '🚪', interactable: true, description: 'Ausgang zur Welt', destination: id.replace('_city', '_world') };
       }
       const npc = npcPositions.find(n => n.x === x && n.y === y);
       if (npc) {
@@ -93,7 +94,7 @@ function createDungeonMap(id: string, name: string): GameMap {
         return { type: 'boss' as const, walkable: true, icon: '👹', interactable: true, description: 'Ein mächtiger Gegner!', enemyId: 'dungeon_boss' };
       }
       if (x === 1 && y === height - 2) {
-        return { type: 'stairs_up' as const, walkable: true, icon: '🪜', interactable: true, description: 'Zurück nach oben' };
+        return { type: 'stairs_up' as const, walkable: true, icon: '🪜', interactable: true, description: 'Zurück nach oben', destination: id.replace('_dungeon', '_world') };
       }
       if ((x + y) % 5 === 0 && x > 2 && y > 2) {
         return { type: 'enemy' as const, walkable: true, icon: '👾', interactable: true, enemyId: 'dungeon_mob' };

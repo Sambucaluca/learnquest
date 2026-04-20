@@ -455,10 +455,12 @@ export const useGameStore = create<GameStore>((set, get) => ({
     updatedChar.equipment = { ...updatedChar.equipment, [slot]: equipped };
     updatedChar.inventory = newInventory;
 
-    if (equipped.statBonus) {
+    if (equipped.statBonus || oldEquip?.statBonus) {
       const newStats = { ...updatedChar.stats };
-      for (const [key, val] of Object.entries(equipped.statBonus)) {
-        newStats[key as keyof Stats] += val;
+      if (equipped.statBonus) {
+        for (const [key, val] of Object.entries(equipped.statBonus)) {
+          newStats[key as keyof Stats] += val;
+        }
       }
       if (oldEquip?.statBonus) {
         for (const [key, val] of Object.entries(oldEquip.statBonus)) {
