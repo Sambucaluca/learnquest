@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a2e;
+    color: #f4e4c1;
+    font-family: 'MedievalSharp', cursive;
+    overflow-x: hidden;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #1a1a2e;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #3e2723;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-amber-600 to-amber-800 text-parchment font-medieval 
+           px-6 py-3 rounded-lg border-2 border-amber-500 
+           hover:from-amber-500 hover:to-amber-700 
+           transition-all duration-200 shadow-lg hover:shadow-amber-500/25
+           active:scale-95 cursor-pointer text-lg;
+  }
+  .btn-danger {
+    @apply bg-gradient-to-r from-red-700 to-red-900 text-parchment font-medieval 
+           px-6 py-3 rounded-lg border-2 border-red-600 
+           hover:from-red-600 hover:to-red-800 
+           transition-all duration-200 shadow-lg
+           active:scale-95 cursor-pointer text-lg;
+  }
+  .btn-secondary {
+    @apply bg-gradient-to-r from-gray-700 to-gray-800 text-parchment font-medieval 
+           px-4 py-2 rounded-lg border border-gray-600 
+           hover:from-gray-600 hover:to-gray-700 
+           transition-all duration-200 cursor-pointer;
+  }
+  .card-dark {
+    @apply bg-gray-900/80 border border-gray-700 rounded-xl p-4 backdrop-blur-sm;
+  }
+  .card-parchment {
+    @apply bg-amber-950/40 border border-amber-800/50 rounded-xl p-4;
+  }
+  .game-panel {
+    @apply bg-gray-900/90 border border-amber-800/30 rounded-xl p-4 backdrop-blur-sm shadow-xl;
+  }
+  .stat-badge {
+    @apply inline-flex items-center gap-1 bg-gray-800 px-3 py-1 rounded-full text-sm border border-gray-600;
+  }
+  .map-tile {
+    @apply w-12 h-12 border border-gray-700/50 flex items-center justify-center text-2xl 
+           cursor-pointer hover:brightness-125 transition-all duration-100;
+  }
+  .inventory-slot {
+    @apply w-14 h-14 bg-gray-800 border border-gray-600 rounded-lg flex items-center justify-center
+           text-2xl cursor-pointer hover:border-amber-500 transition-colors;
+  }
+}
